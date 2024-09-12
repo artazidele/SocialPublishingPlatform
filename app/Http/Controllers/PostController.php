@@ -10,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Message;
+use App\Http\Controllers\PostCategoryController;
+
 use Illuminate\Support\Facades\Auth;
 use DB;
 
@@ -20,19 +22,28 @@ class PostController extends Controller
      */
     public function index(): View
     {
-        // ja ir categories vai keywords
         $categories = Category::all();
-        return view('posts.index')->with('categories', $categories);
+        $posts = Post::all();
+        return view('posts.index')->with([
+            'categories' => $categories,
+            'posts' => $posts,
+        ]);
     }
 
     /**
      * Display a user post view.
      */
-    public function user(): View
+    public function user(Request $request): View
     {
-        // ja ir categories vai keywords
+        $username = $request->username;
         $categories = Category::all();
-        return view('posts.index')->with('categories', $categories);
+        $posts = DB::table('posts')
+                ->where('username', '=', $username)
+                ->get();
+        return view('posts.index')->with([
+            'categories' => $categories,
+            'posts' => $posts,
+        ]);
     }
 
     /**
@@ -56,17 +67,28 @@ class PostController extends Controller
             'categories' => 'required',
         ]);
 
-        dd('validated');
-        // save post
+        // create and save post
+        $post = new Post;
+        // $post->username = Auth::user->username;
+        $post->username = 'user1'; // vēlāk jāizlabo
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->save();
+        $post_id = $post->id;
         // save postCategories
+        $postCategoryController = new PostCategoryController;
+        $postCategoryController->store($request->categories, $post_id);
+        // redirect to all posts
+        return redirect('/posts');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id): View
+    public function show(Request $request): View
     {
-        //
+        $post = Post::find($request->id);
+        return view('posts.show')->with('post', $post);
     }
 
     /**

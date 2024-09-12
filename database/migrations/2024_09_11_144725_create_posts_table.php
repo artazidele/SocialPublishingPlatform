@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('title');
-            $table->string('content');
+            $table->longText('content');
             $table->timestamps();
 
             $table->foreign('username')->references('username')->on('users')->onDelete('cascade');

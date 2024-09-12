@@ -94,9 +94,14 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): View
-    {
-        //
+    public function edit(Request $request): View
+    {   
+        $categories = Category::all();
+        $post = Post::find($request->id);
+        return view('posts.edit')->with([
+            'post' => $post,
+            'categories' => $categories,
+        ]);
     }
 
     /**

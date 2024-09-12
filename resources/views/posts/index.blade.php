@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
-@section('title', 'All Posts')
+@section('title', 'Posts')
 
 @section('content')
 <div class="">
     <div class="">
-        <h1>All Posts</h1>
+        <h1>Posts</h1>
         <div>
             <form>
                 <div>
@@ -34,6 +34,7 @@
                             @endforeach
                         </ul>
                         <h6>{{ sizeof($post->comments) }} comments</h6>
+                        <button onclick="window.location='/posts/{{ $post->id }}'">Show more</button>
                     </div>
                 @endforeach
             @endif

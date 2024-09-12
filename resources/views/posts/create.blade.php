@@ -7,7 +7,7 @@
     <div class="">
         <h1>New Post</h1>
         <div>
-        <form method="POST" action="/posts">
+            <form method="POST" action="/posts">
                 @csrf
                 <div>
                     <label>Categories: </label>
@@ -17,9 +17,9 @@
                                 <input class="@error('categories') is-invalid @enderror" {{ in_array($category->id, old('categories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
                                 <label>{{ $category->name }}</label>
                             @endforeach
-                                @error('categories')
-                                    <p>{{ $message }}</p>
-                                @enderror
+                            @error('categories')
+                                <p>{{ $message }}</p>
+                            @enderror
                         @endif
                     </div>
                 </div>

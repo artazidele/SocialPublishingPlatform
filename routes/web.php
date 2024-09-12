@@ -13,4 +13,5 @@ Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::get('/posts/edit/{id}', [PostController::class, 'edit']);
 Route::post('/posts/edit/{id}', [PostController::class, 'update']);
 Route::get('/posts/destroy/{id}', [PostController::class, 'destroy']);
+//
 Route::post('/posts/filter/search', [PostController::class, 'filterAndSearch']);

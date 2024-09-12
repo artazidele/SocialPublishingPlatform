@@ -66,7 +66,6 @@ class PostController extends Controller
             'content' => 'required',
             'categories' => 'required',
         ]);
-
         // create and save post
         $post = new Post;
         // $post->username = Auth::user->username;
@@ -107,9 +106,27 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        //
+        // validate data
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'categories' => 'required',
+        ]);
+        // update post
+        $post = Post::find($request->id);
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+        // destroy previous postCategories
+        $postCategoryController = new PostCategoryController;
+        $postCategoryController->destroy($request->id);
+        // save new postCategories
+        $postCategoryController->store($request->categories, $request->id);
+        // redirect to all posts
+        return redirect('/posts');
     }
 
     /**

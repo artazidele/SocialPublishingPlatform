@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\PostCategory;
 
+use DB;
+
 class PostCategoryController extends Controller
 {
 
@@ -49,8 +51,10 @@ class PostCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($post_id)
     {
-        //
+        DB::table('post_categories')
+            ->where('post_id', '=', $post_id)
+            ->delete();
     }
 }

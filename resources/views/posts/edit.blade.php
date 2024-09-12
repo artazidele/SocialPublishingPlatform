@@ -13,7 +13,7 @@
                     <input id="contentP" value="{{ $post->content }}">
                     <input id="postCategoriesP" value="{{ $post->postCategories }}">
                 </div>
-                <form method="POST" action="/posts">
+                <form method="POST" action="/posts/edit/{{ $post->id }}">
                     @csrf
                     <div>
                         <label>Categories: </label>

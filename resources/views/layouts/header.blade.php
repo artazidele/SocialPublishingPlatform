@@ -5,7 +5,7 @@
     <div class="">
         <ul class="">
             <li><a href="/posts">All Posts</a></li>
-            <li><a href="/posts/user/id">My Posts</a></li>
+            <li><a href="/posts/user/user1">My Posts</a></li>
             <li><a href="/posts/create">New Post</a></li>
             <li><a href="/signout">Sign Out</a></li>
         </ul>

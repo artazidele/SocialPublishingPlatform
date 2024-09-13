@@ -11,8 +11,8 @@
                 @csrf
                 <div>
                     <h2>Filter</h2>
-                    @if(isset($categories))
-                        @foreach ($categories as $category)
+                    @if(session('categories')!=null)
+                        @foreach (session('categories') as $category)
                             <input class="@error('categories') is-invalid @enderror" {{ in_array($category->id, old('categories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
                             <label>{{ $category->name }}</label>
                         @endforeach
@@ -36,8 +36,8 @@
                     <input type="submit" value="Filter and Search">
                 </div>
             </form>
-            @if(isset($posts))
-                @foreach ($posts as $post)
+            @if((session('posts')!=null))
+                @foreach (session('posts') as $post)
                     <div>
                         <h3>{{ $post->title }}</h3>
                         <h6>{{ $post->username }}</h6>

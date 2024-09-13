@@ -13,15 +13,17 @@ use App\Models\Message;
 use App\Http\Controllers\PostCategoryController;
 
 use Illuminate\Support\Facades\Auth;
-use DB;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        // clear session data
+        $request->session()->forget(['posts', 'categories', 'checkedCategories', 'searchedKeywords']);
+        // return all post view
         $categories = Category::all();
         $posts = Post::all();
         return view('posts.index')->with([
@@ -36,12 +38,10 @@ class PostController extends Controller
     public function user(Request $request): View
     {
         $username = $request->username;
-        $categories = Category::all();
-        $posts = DB::table('posts')
-                ->where('username', '=', $username)
-                ->get();
-        return view('posts.index')->with([
-            'categories' => $categories,
+        $posts = Post::where('username', '=', $username)
+            ->get();
+        // dd($posts);
+        return view('posts.user')->with([
             'posts' => $posts,
         ]);
     }
@@ -139,5 +139,69 @@ class PostController extends Controller
         $post->delete();
         // return to posts page
         return redirect('/posts');
+    }
+
+    //
+    public function filterAndSearch(Request $request): RedirectResponse
+    {
+        // validate data
+        $request->validate([
+            'categories' => 'required',
+        ]);
+        // create keyword array
+        $keywordArray = [];
+        if ($request->keyword != null) {
+            foreach($request->keyword as $keyword) {
+                if (strlen(trim($keyword)) > 0) {
+                    array_push($keywordArray, $keyword);
+                }
+            }
+        }
+        // filter posts by categories
+        $allPosts = Post::all();
+        $filteredPosts = [];
+        foreach($allPosts as $post) {
+            foreach($request->categories as $category_id) {
+                foreach($post->postCategories as $postCategory) {
+                    if($category_id == $postCategory->category_id) {
+                        if(!in_array($post, $filteredPosts)) {
+                            array_push($filteredPosts, $post);
+                            break;      
+                        }
+                    }
+                }
+            }
+        }
+        // search posts by keywords
+        $searchedPosts = [];
+        if(!empty($keywordArray)) {
+            foreach($filteredPosts as $post) {
+                foreach($keywordArray as $word) {
+                    if (str_contains($post->title, $word) || str_contains($post->content, $word)) {
+                        if(!in_array($post, $searchedPosts)) {
+                            array_push($searchedPosts, $post);
+                            break;      
+                        }
+                    }
+                }
+            }
+        } else {
+            $searchedPosts = $filteredPosts;
+        }
+        // save session data
+        $categories = Category::all();   
+        $checkedCategories = $request->categories;
+        $searchedKeywords = $keywordArray;
+        $request->session()->put('categories', $categories);
+        $request->session()->put('posts', $searchedPosts);
+        $request->session()->put('checkedCategories', $checkedCategories);
+        $request->session()->put('searchedKeywords', $searchedKeywords);
+        // redirect to filtered post view
+        return redirect('/posts/filtered/searched');
+    }
+
+    public function filteredAndSearched(): View
+    {
+        return view('posts.filtered');
     }
 }

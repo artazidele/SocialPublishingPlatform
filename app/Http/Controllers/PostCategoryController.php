@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Models\PostCategory;
 
-use DB;
-
 class PostCategoryController extends Controller
 {
 
@@ -53,8 +51,7 @@ class PostCategoryController extends Controller
      */
     public function destroy($post_id)
     {
-        DB::table('post_categories')
-            ->where('post_id', '=', $post_id)
+        PostCategory::where('post_id', '=', $post_id)
             ->delete();
     }
 }

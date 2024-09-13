@@ -19,5 +19,6 @@ Route::get('/posts/destroy/{id}', [PostController::class, 'destroy']);
 Route::get('/posts/{id}/comments/destroy/{comment_id}', [CommentController::class, 'destroy']);
 Route::post('/posts/{id}/comments', [CommentController::class, 'store']);
 
-// filter and search route
+// Filter and search routes
 Route::post('/posts/filter/search', [PostController::class, 'filterAndSearch']);
+Route::get('/posts/filtered/searched', [PostController::class, 'filteredAndSearched']);

@@ -27,3 +27,17 @@ function addRemoveDivFunctionality() {
 }
 
 addRemoveDivFunctionality();
+
+function checkAll() {
+    const categoriesInputs = document.getElementsByName('categories[]');
+    const allCheckbox = document.getElementById('allCheckbox');
+    if (allCheckbox.checked == true) {
+        categoriesInputs.forEach(input => {
+            input.checked = true;
+        });
+    } else {
+        categoriesInputs.forEach(input => {
+            input.checked = false;
+        });
+    }
+}

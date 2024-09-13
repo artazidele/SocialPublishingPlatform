@@ -37,8 +37,8 @@ class CommentController extends Controller
         ]);
         // create and save post
         $comment = new Comment;
-        // $comment->user_id = Auth::user->id;
-        $comment->user_id = '1'; // vēlāk jāizlabo
+        $comment->user_id = Auth::user()->id;
+        // $comment->user_id = '1'; // vēlāk jāizlabo
         $comment->post_id = $request->id;
         $comment->message = $request->comment;
         $comment->save();

@@ -11,6 +11,8 @@
                 @csrf
                 <div>
                     <h2>Filter</h2>
+                    <input id="allCheckbox" class="" type="checkbox" onclick="checkAll()">
+                    <label>All</label>
                     @if(isset($categories))
                         @foreach ($categories as $category)
                             <input class="@error('categories') is-invalid @enderror" {{ in_array($category->id, old('categories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
@@ -40,7 +42,7 @@
                 @foreach ($posts as $post)
                     <div>
                         <h3>{{ $post->title }}</h3>
-                        <h6>{{ $post->username }}</h6>
+                        <h6><span onclick="window.location='/posts/user/{{ $post->username }}'">{{ $post->username }}</span></h6>
                         <p>{{ $post->content }}</p>
                         <h6>Categories: </h6>
                         <ul>

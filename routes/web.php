@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserController;
 
 // Post routes
 Route::get('/posts', [PostController::class, 'index']);
@@ -22,3 +23,10 @@ Route::post('/posts/{id}/comments', [CommentController::class, 'store']);
 // Filter and search routes
 Route::post('/posts/filter/search', [PostController::class, 'filterAndSearch']);
 Route::get('/posts/filtered/searched', [PostController::class, 'filteredAndSearched']);
+
+// User routes
+Route::get('/users/signup', [UserController::class, 'signup']);
+Route::post('/users/register', [UserController::class, 'register']);
+Route::get('/users/signin', [UserController::class, 'signin']);
+Route::get('/users/login', [UserController::class, 'login']);
+Route::get('/users/logout', [UserController::class, 'logout']);

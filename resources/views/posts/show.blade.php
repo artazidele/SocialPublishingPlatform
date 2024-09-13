@@ -14,7 +14,7 @@
             @if(isset($post))
                 <div>
                     <h3>{{ $post->title }}</h3>
-                    <h6>{{ $post->username }}</h6>
+                    <h6><span onclick="window.location='/posts/user/{{ $post->username }}'">{{ $post->username }}</span></h6>
                     <p>{{ $post->content }}</p>
                     <h6>Categories: </h6>
                     <ul>
@@ -25,7 +25,7 @@
                     <h6>Comments: </h6>
                     @foreach($post->comments as $comment)
                     <div>
-                        <h6>{{ $comment->user->username }}</h6>
+                        <h6><span onclick="window.location='/posts/user/{{ $comment->user->username }}'">{{ $comment->user->username }}</span></h6>
                         <p>{{ $comment->message }}</p>
                         <p>{{ $comment->created_at }}</p>
                         <button onclick="openWindow('deleteCommentDiv')">Delete</button>

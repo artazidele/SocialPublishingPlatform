@@ -40,7 +40,7 @@
                 @foreach (session('posts') as $post)
                     <div>
                         <h3>{{ $post->title }}</h3>
-                        <h6>{{ $post->username }}</h6>
+                        <h6><span onclick="window.location='/posts/user/{{ $post->username }}'">{{ $post->username }}</span></h6>
                         <p>{{ $post->content }}</p>
                         <h6>Categories: </h6>
                         <ul>

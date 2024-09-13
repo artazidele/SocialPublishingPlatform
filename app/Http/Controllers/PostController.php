@@ -40,7 +40,6 @@ class PostController extends Controller
         $username = $request->username;
         $posts = Post::where('username', '=', $username)
             ->get();
-        // dd($posts);
         return view('posts.user')->with([
             'posts' => $posts,
         ]);
@@ -68,8 +67,8 @@ class PostController extends Controller
         ]);
         // create and save post
         $post = new Post;
-        // $post->username = Auth::user->username;
-        $post->username = 'user1'; // vēlāk jāizlabo
+        $post->username = Auth::user()->username;
+        // $post->username = 'user1'; // vēlāk jāizlabo
         $post->title = $request->title;
         $post->content = $request->content;
         $post->save();

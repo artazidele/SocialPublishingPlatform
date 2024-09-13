@@ -36,24 +36,20 @@
                         <button onclick="closeWindow('deleteCommentDiv')">Cancel</button>
                     </div>
                     @endforeach
-                    <button onclick="openWindow('addCommentDiv')">Add comment</button>
-                    <div class="hiddenDiv" id="addCommentDiv">
+                    <div>
                         <form action="/posts/{{ $post->id }}/comments" method="POST">
                             @csrf    
                             <div class="">
                                 <label class="">Comment: </label>
                                 <input placeholder="Comment*" class="@error('comment') is-invalid @enderror" type="text" name="comment" value="{{ old('comment') }}">
                                 @error('comment')
-                                    <p>{{ $message }}</p>
+                                    <p id="commentErrorP">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="">
                                 <input type="submit" value="Save comment">
                             </div>
                         </form>
-                        <div class="">
-                            <button onclick="closeWindow('addCommentDiv')">Cancel</button>
-                        </div>
                     </div>
                     <button onclick="window.location='/posts/edit/{{ $post->id }}'">Edit</button>
                 </div>

@@ -61,5 +61,6 @@
         </div>
     </div>
     <script src="{{ URL::asset('js/posts.js') }}"></script>
+    <script src="{{ URL::asset('js/editpost.js') }}"></script>
 </div>
 @endsection

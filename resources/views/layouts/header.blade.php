@@ -6,8 +6,8 @@
         <ul class="">
             <li><a href="/posts">All Posts</a></li>
             <li><a href="/posts/user/id">My Posts</a></li>
-            <li><a href="/apartments">New Post</a></li>
-            <li><a href="/apartments/new">Sign Out</a></li>
+            <li><a href="/posts/create">New Post</a></li>
+            <li><a href="/signout">Sign Out</a></li>
         </ul>
     </div>
     <div class="">

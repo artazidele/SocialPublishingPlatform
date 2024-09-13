@@ -20,11 +20,11 @@ class Comment extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'username');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function post(): BelongsTo
     {
-        return $this->belongsTo(Post::class, 'username');
+        return $this->belongsTo(Post::class, 'post_id');
     }
 }

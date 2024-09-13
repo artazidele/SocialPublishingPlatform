@@ -2,6 +2,10 @@
 
 @section('title', 'Post')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ URL::asset('css/posts.css') }}" />
+@endpush
+
 @section('content')
 <div class="">
     <div class="">
@@ -23,12 +27,39 @@
                     <div>
                         <h6>{{ $comment->user->username }}</h6>
                         <p>{{ $comment->message }}</p>
+                        <p>{{ $comment->created_at }}</p>
+                        <button onclick="openWindow('deleteCommentDiv')">Delete</button>
+                    </div>
+                    <div class="hiddenDiv" id="deleteCommentDiv">
+                        <h4>Do you want to delete this comment?</h4>
+                        <button onclick="window.location='/posts/{{ $post->id }}/comments/destroy/{{ $comment->id }}'">Delete</button>
+                        <button onclick="closeWindow('deleteCommentDiv')">Cancel</button>
                     </div>
                     @endforeach
+                    <button onclick="openWindow('addCommentDiv')">Add comment</button>
+                    <div class="hiddenDiv" id="addCommentDiv">
+                        <form action="/posts/{{ $post->id }}/comments" method="POST">
+                            @csrf    
+                            <div class="">
+                                <label class="">Comment: </label>
+                                <input placeholder="Comment*" class="@error('comment') is-invalid @enderror" type="text" name="comment" value="{{ old('comment') }}">
+                                @error('comment')
+                                    <p>{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="">
+                                <input type="submit" value="Save comment">
+                            </div>
+                        </form>
+                        <div class="">
+                            <button onclick="closeWindow('addCommentDiv')">Cancel</button>
+                        </div>
+                    </div>
                     <button onclick="window.location='/posts/edit/{{ $post->id }}'">Edit</button>
                 </div>
             @endif
         </div>
     </div>
+    <script src="{{ URL::asset('js/posts.js') }}"></script>
 </div>
 @endsection

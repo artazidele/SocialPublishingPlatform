@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MessageController extends Controller
+use Illuminate\Http\RedirectResponse;
+
+use App\Models\Comment;
+
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +31,19 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate data
+        $request->validate([
+            'comment' => 'required|max:255',
+        ]);
+        // create and save post
+        $comment = new Comment;
+        // $comment->user_id = Auth::user->id;
+        $comment->user_id = '1'; // vēlāk jāizlabo
+        $comment->post_id = $request->id;
+        $comment->message = $request->comment;
+        $comment->save();
+        // return to post page
+        return redirect('/posts/'.$request->id);
     }
 
     /**
@@ -57,8 +73,12 @@ class MessageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request): RedirectResponse
     {
-        //
+        // delete comment
+        $comment = Comment::find($request->comment_id);
+        $comment->delete();
+        // return to posts page
+        return redirect('/posts/'.$request->id);
     }
 }

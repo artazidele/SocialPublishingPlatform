@@ -3,3 +3,6 @@
 <meta name="description" content="Social Publishing Platform">
 
 <title>@yield('title', 'Social Publishing Platform')</title>
+
+{{-- styles --}}
+<link rel="stylesheet" href="{{ URL::asset('css/posts.css') }}" />

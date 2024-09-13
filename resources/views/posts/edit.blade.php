@@ -2,6 +2,10 @@
 
 @section('title', 'Edit Post')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ URL::asset('css/posts.css') }}" />
+@endpush
+
 @section('content')
 <div class="">
     <div class="">
@@ -44,10 +48,16 @@
                         @enderror
                     </div>
                     <div class="">
-                        <input type="submit" value="Create Post">
+                        <input type="submit" value="Save Post">
                     </div>
                 </form>
-            @endif
+                <button onclick="openWindow('deletePostDiv')">Delete</button>
+                <div class="hiddenDiv" id="deletePostDiv">
+                    <h4>Do you want to delete this post?</h4>
+                    <button onclick="window.location='/posts/destroy/{{ $post->id }}'">Delete</button>
+                    <button onclick="closeWindow('deletePostDiv')">Cancel</button>
+                </div>
+                @endif
         </div>
     </div>
     <script src="{{ URL::asset('js/posts.js') }}"></script>

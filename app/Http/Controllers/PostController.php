@@ -151,8 +151,6 @@ class PostController extends Controller
     //
     public function filterAndSearch(Request $request): RedirectResponse
     {
-        // clear keywords
-        $request->session()->forget('keywords');
         // create keyword array
         $keywordArray = [];
         if ($request->keyword != null) {
@@ -162,7 +160,7 @@ class PostController extends Controller
                 }
             }
         }
-        $request->session()->put('keywords', $keywordArray);
+        $request->session()->put('searchedKeywords', $keywordArray);
         // validate data
         $request->validate([
             'categories' => 'required',
@@ -201,11 +199,9 @@ class PostController extends Controller
         // save session data
         $categories = Category::all();   
         $checkedCategories = $request->categories;
-        $searchedKeywords = $keywordArray;
         $request->session()->put('categories', $categories);
         $request->session()->put('posts', $searchedPosts);
         $request->session()->put('checkedCategories', $checkedCategories);
-        $request->session()->put('searchedKeywords', $searchedKeywords);
         // clear keywords
         $request->session()->forget('keywords');
         // redirect to filtered post view

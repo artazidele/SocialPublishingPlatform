@@ -15,7 +15,8 @@
                     <label>All</label>
                     @if(session('categories')!=null)
                         @foreach (session('categories') as $category)
-                            <input class="@error('categories') is-invalid @enderror" {{ in_array($category->id, old('categories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                            <input class="@error('categories') is-invalid @enderror" {{ in_array($category->id, session('checkedCategories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                            <!-- <input class="@error('categories') is-invalid @enderror" {{ in_array($category->id, old('categories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]"> -->
                             <label>{{ $category->name }}</label>
                         @endforeach
                         @error('categories')
@@ -27,18 +28,19 @@
                     <h2>Search</h2>
                     <div id="keyword_div" class="form-column">
                         <p class="form-label">Keywords: </p>
-                            @if(session('keywords')!==null)
-                                @foreach (session('keywords') as $keyword)
-                                    <div>
-                                        <input name="keyword[]" type="text" value="{{ $keyword }}">
-                                        <span class="removeDiv">&times;</span>
-                                    </div>
-                                @endforeach
-                            @endif
-                        <div>
-                            <input name="keyword[]" type="text">
-                            <span class="removeDiv">&times;</span>
-                        </div>
+                        @if(!empty(session('searchedKeywords')))
+                            @foreach (session('searchedKeywords') as $keyword)
+                                <div>
+                                    <input name="keyword[]" type="text" value="{{ $keyword }}">
+                                    <span class="removeDiv">&times;</span>
+                                </div>
+                            @endforeach
+                        @else
+                            <div>
+                                <input name="keyword[]" type="text">
+                                <span class="removeDiv">&times;</span>
+                            </div>
+                        @endif
                     </div>
                     <span onclick="addNewKeywordInput()">New keyword</span>
                 </div>

@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 
 use App\Models\Comment;
 
+use Illuminate\Support\Facades\Auth;
+
 class CommentController extends Controller
 {
     /**
@@ -38,7 +40,6 @@ class CommentController extends Controller
         // create and save post
         $comment = new Comment;
         $comment->user_id = Auth::user()->id;
-        // $comment->user_id = '1'; // vēlāk jāizlabo
         $comment->post_id = $request->id;
         $comment->message = $request->comment;
         $comment->save();

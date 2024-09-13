@@ -27,6 +27,14 @@
                     <h2>Search</h2>
                     <div id="keyword_div" class="form-column">
                         <p class="form-label">Keywords: </p>
+                        @if(session('keywords')!==null)
+                            @foreach (session('keywords') as $keyword)
+                                <div>
+                                    <input name="keyword[]" type="text" value="{{ $keyword }}">
+                                    <span class="removeDiv">&times;</span>
+                                </div>
+                            @endforeach
+                        @endif
                         <div>
                             <input name="keyword[]" type="text">
                             <span class="removeDiv">&times;</span>

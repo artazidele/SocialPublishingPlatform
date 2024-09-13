@@ -23,18 +23,26 @@
                         @endforeach
                     </ul>
                     <h6>Comments: </h6>
-                    @foreach($post->comments as $comment)
-                    <div>
-                        <h6><span onclick="window.location='/posts/user/{{ $comment->user->username }}'">{{ $comment->user->username }}</span></h6>
-                        <p>{{ $comment->message }}</p>
-                        <p>{{ $comment->created_at }}</p>
-                        <button onclick="openWindow('deleteCommentDiv')">Delete</button>
-                    </div>
-                    <div class="hiddenDiv" id="deleteCommentDiv">
-                        <h4>Do you want to delete this comment?</h4>
-                        <button onclick="window.location='/posts/{{ $post->id }}/comments/destroy/{{ $comment->id }}'">Delete</button>
-                        <button onclick="closeWindow('deleteCommentDiv')">Cancel</button>
-                    </div>
+                    @foreach($comments as $comment)
+                        @if($comment->user_id == Auth::id())
+                        <div>
+                            <h6><span onclick="window.location='/posts/user/{{ $comment->user->username }}'">{{ $comment->user->username }}</span></h6>
+                            <p>{{ $comment->message }}</p>
+                            <p>{{ $comment->created_at }}</p>
+                            <button onclick="openWindow('deleteCommentDiv')">Delete</button>
+                        </div>
+                        @else
+                        <div>
+                            <h6><span onclick="window.location='/posts/user/{{ $comment->user->username }}'">{{ $comment->user->username }}</span></h6>
+                            <p>{{ $comment->message }}</p>
+                            <p>{{ $comment->created_at }}</p>
+                        </div>
+                        @endif
+                        <div class="hiddenDiv" id="deleteCommentDiv">
+                            <h4>Do you want to delete this comment?</h4>
+                            <button onclick="window.location='/posts/{{ $post->id }}/comments/destroy/{{ $comment->id }}'">Delete</button>
+                            <button onclick="closeWindow('deleteCommentDiv')">Cancel</button>
+                        </div>
                     @endforeach
                     <div>
                         <form action="/posts/{{ $post->id }}/comments" method="POST">
@@ -51,7 +59,9 @@
                             </div>
                         </form>
                     </div>
+                    @if($post->username == Auth::user()->username)
                     <button onclick="window.location='/posts/edit/{{ $post->id }}'">Edit</button>
+                    @endif
                 </div>
             @endif
         </div>

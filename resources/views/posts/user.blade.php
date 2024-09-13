@@ -5,7 +5,7 @@
 @section('content')
 <div class="">
     <div class="">
-        <h1>{{ Auth::user()->username }} posts</h1>
+        <h1>{{ $username }} posts</h1>
         <div>
             @if(isset($posts))
                 @foreach ($posts as $post)

@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Comment;
 use App\Models\Message;
 use App\Http\Controllers\PostCategoryController;
 
@@ -25,7 +26,7 @@ class PostController extends Controller
         $request->session()->forget(['posts', 'categories', 'checkedCategories', 'searchedKeywords']);
         // return all post view
         $categories = Category::all();
-        $posts = Post::all();
+        $posts = Post::orderBy('created_at','desc')->get();
         return view('posts.index')->with([
             'categories' => $categories,
             'posts' => $posts,
@@ -39,9 +40,11 @@ class PostController extends Controller
     {
         $username = $request->username;
         $posts = Post::where('username', '=', $username)
+            ->orderBy('created_at','desc')
             ->get();
         return view('posts.user')->with([
             'posts' => $posts,
+            'username' => $username,
         ]);
     }
 
@@ -68,7 +71,6 @@ class PostController extends Controller
         // create and save post
         $post = new Post;
         $post->username = Auth::user()->username;
-        // $post->username = 'user1'; // vēlāk jāizlabo
         $post->title = $request->title;
         $post->content = $request->content;
         $post->save();
@@ -86,7 +88,13 @@ class PostController extends Controller
     public function show(Request $request): View
     {
         $post = Post::find($request->id);
-        return view('posts.show')->with('post', $post);
+        $comments = Comment::where('post_id', '=', $request->id)
+            ->orderBy('created_at','desc')
+            ->get();
+        return view('posts.show')->with([
+            'post' => $post,
+            'comments' => $comments,
+        ]);
     }
 
     /**
@@ -143,10 +151,8 @@ class PostController extends Controller
     //
     public function filterAndSearch(Request $request): RedirectResponse
     {
-        // validate data
-        $request->validate([
-            'categories' => 'required',
-        ]);
+        // clear keywords
+        $request->session()->forget('keywords');
         // create keyword array
         $keywordArray = [];
         if ($request->keyword != null) {
@@ -156,8 +162,13 @@ class PostController extends Controller
                 }
             }
         }
+        $request->session()->put('keywords', $keywordArray);
+        // validate data
+        $request->validate([
+            'categories' => 'required',
+        ]);
         // filter posts by categories
-        $allPosts = Post::all();
+        $allPosts = Post::orderBy('created_at','desc')->get();;
         $filteredPosts = [];
         foreach($allPosts as $post) {
             foreach($request->categories as $category_id) {
@@ -195,6 +206,8 @@ class PostController extends Controller
         $request->session()->put('posts', $searchedPosts);
         $request->session()->put('checkedCategories', $checkedCategories);
         $request->session()->put('searchedKeywords', $searchedKeywords);
+        // clear keywords
+        $request->session()->forget('keywords');
         // redirect to filtered post view
         return redirect('/posts/filtered/searched');
     }

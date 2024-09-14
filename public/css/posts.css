@@ -5,3 +5,15 @@
 .visibleDiv {
     display: block;
 }
+
+.categories__div {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .categories__div {
+        display: grid;
+        grid-template-columns: auto;
+    }
+}

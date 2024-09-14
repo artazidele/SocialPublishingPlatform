@@ -21,7 +21,6 @@ class CategorySeeder extends Seeder
             ['name' => 'Games',],
             ['name' => 'Fashion',],
             ['name' => 'Shopping',],
-            ['name' => 'Trips',],
             ['name' => 'Pets',],
             ['name' => 'Health',],
             ['name' => 'Lifestyle',],

@@ -17,12 +17,12 @@ class PostCategorySeeder extends Seeder
         DB::table('post_categories')->insert([
             ['post_id' => '1', 'category_id' => '2',],
             ['post_id' => '1', 'category_id' => '4',],
-            ['post_id' => '1', 'category_id' => '10',],
+            ['post_id' => '1', 'category_id' => '9',],
             ['post_id' => '2', 'category_id' => '2',],
+            ['post_id' => '2', 'category_id' => '8',],
             ['post_id' => '2', 'category_id' => '9',],
-            ['post_id' => '2', 'category_id' => '10',],
             ['post_id' => '3', 'category_id' => '3',],
-            ['post_id' => '3', 'category_id' => '9',],
+            ['post_id' => '3', 'category_id' => '8',],
         ]);
     }
 }

@@ -1,4 +1,4 @@
-<div class="">
+<div id="menuDiv" class="">
     <div class="">
         <h3 class="p-4">Social Publishing Platform</h3>
     </div>

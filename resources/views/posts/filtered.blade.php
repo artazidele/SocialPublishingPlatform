@@ -21,7 +21,11 @@
                         <div class="pb-4 mt-2 categories__div w-100 border-bottom border-danger" style="--bs-border-opacity: .25;">
                             @foreach (session('categories') as $category)
                                 <div>
-                                    <input class="@error('categories') is-invalid @enderror form-check-input" {{ in_array($category->id, session('checkedCategories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                                    @if($errors->has('categories'))
+                                        <input class="@error('categories') is-invalid @enderror form-check-input" {{ in_array($category->id, old('categories', [])) == true ? 'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                                    @else
+                                        <input class="@error('categories') is-invalid @enderror form-check-input" {{ in_array($category->id, session('checkedCategories')) == true ? 'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                                    @endif
                                     <label>{{ $category->name }}</label>
                                 </div>
                             @endforeach

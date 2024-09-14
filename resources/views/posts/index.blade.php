@@ -23,7 +23,7 @@
                         <div class="pb-4 mt-2 categories__div w-100 border-bottom border-danger" style="--bs-border-opacity: .25;">
                             @foreach ($categories as $category)
                                 <div>
-                                    <input class="@error('categories') is-invalid @enderror form-check-input" {{ in_array($category->id, old('categories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                                    <input class="@error('categories') is-invalid @enderror form-check-input" value="{{ $category->id }}" type="checkbox" name="categories[]">
                                     <label>{{ $category->name }}</label>
                                 </div>
                             @endforeach

@@ -10,7 +10,7 @@
             @isset($signin_error)
                 <p>{{ $signin_error }}</p>
             @endisset
-            <form method="GET" action="/users/login">
+            <form method="GET" action="/users/login" enctype="application/x-www-form-urlencoded">
                 @csrf
                 <div class="">
                     <label class="">Email: </label>

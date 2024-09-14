@@ -45,7 +45,7 @@
                         </div>
                     @endforeach
                     <div>
-                        <form action="/posts/{{ $post->id }}/comments" method="POST">
+                        <form action="/posts/{{ $post->id }}/comments" method="POST" enctype="application/x-www-form-urlencoded">
                             @csrf    
                             <div class="">
                                 <label class="">Comment: </label>

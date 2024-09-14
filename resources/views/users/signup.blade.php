@@ -10,7 +10,7 @@
             @isset($registration_error)
                 <p>{{ $registration_error }}</p>
             @endisset
-            <form method="POST" action="/users/register">
+            <form method="POST" action="/users/register" enctype="application/x-www-form-urlencoded">
                 @csrf
                 <div class="">
                     <label class="">Email: </label>

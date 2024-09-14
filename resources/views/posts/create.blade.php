@@ -7,7 +7,7 @@
     <div class="">
         <h1>New Post</h1>
         <div>
-            <form method="POST" action="/posts">
+            <form method="POST" action="/posts" enctype="application/x-www-form-urlencoded">
                 @csrf
                 <div>
                     <label>Categories: </label>

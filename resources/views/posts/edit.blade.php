@@ -17,7 +17,7 @@
                     <input id="contentP" value="{{ $post->content }}">
                     <input id="postCategoriesP" value="{{ $post->postCategories }}">
                 </div>
-                <form method="POST" action="/posts/edit/{{ $post->id }}">
+                <form method="POST" action="/posts/edit/{{ $post->id }}" enctype="application/x-www-form-urlencoded">
                     @csrf
                     <div>
                         <label>Categories: </label>

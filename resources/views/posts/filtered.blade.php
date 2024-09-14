@@ -7,7 +7,7 @@
     <div class="">
         <h1>Posts</h1>
         <div>
-            <form method="POST" action="/posts/filter/search">
+            <form method="POST" action="/posts/filter/search" enctype="application/x-www-form-urlencoded">
                 @csrf
                 <div>
                     <h2>Filter</h2>
@@ -16,7 +16,6 @@
                     @if(session('categories')!=null)
                         @foreach (session('categories') as $category)
                             <input class="@error('categories') is-invalid @enderror" {{ in_array($category->id, session('checkedCategories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
-                            <!-- <input class="@error('categories') is-invalid @enderror" {{ in_array($category->id, old('categories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]"> -->
                             <label>{{ $category->name }}</label>
                         @endforeach
                         @error('categories')

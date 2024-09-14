@@ -7,7 +7,7 @@
     <div class="">
         <h1>Posts</h1>
         <div>
-            <form method="POST" action="/posts/filter/search">
+            <form method="POST" action="/posts/filter/search" enctype="application/x-www-form-urlencoded">
                 @csrf
                 <div>
                     <h2>Filter</h2>

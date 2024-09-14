@@ -16,12 +16,13 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             ['name' => 'Animals',],
-            ['name' => 'Sports',],
-            ['name' => 'Clothes',],
+            ['name' => 'Sport',],
+            ['name' => 'Food',],
+            ['name' => 'Games',],
             ['name' => 'Fashion',],
+            ['name' => 'Shopping',],
+            ['name' => 'Trips',],
             ['name' => 'Pets',],
-            ['name' => 'Phones',],
-            ['name' => 'Lectures',],
             ['name' => 'Health',],
             ['name' => 'Lifestyle',],
         ]);

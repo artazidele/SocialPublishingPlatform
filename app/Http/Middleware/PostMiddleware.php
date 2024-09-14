@@ -24,7 +24,7 @@ class PostMiddleware
             return redirect('/users/signin');
         }
         if($user->username !== $post->username) {
-            return redirect('/posts');
+            return redirect('/posts/'.$request->id);
         }
         return $next($request);
     }

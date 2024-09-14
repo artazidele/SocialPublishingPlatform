@@ -28,8 +28,8 @@
                 </div>
                 <div class="form-group mt-3">
                     <label class="form-label">Password: </label>
-                    <input placeholder="Password*" class="@error('title') is-invalid @enderror form-control" type="password" name="password" value="{{ old('password') }}">
-                    @error('password')
+                    <input placeholder="Password*" class="@error('new_password') is-invalid @enderror form-control" type="password" name="new_password" value="{{ old('new_password') }}">
+                    @error('new_password')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>

@@ -33,13 +33,13 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|unique:users,username|max:255',
             'email' => 'required|unique:users,email|max:255|email:rfc',
-            'password' => 'required|max:255|min:8',
-            'confirm_password' => 'required|max:255|min:8|same:password',
+            'new_password' => 'required|max:255|min:8',
+            'confirm_password' => 'required|max:255|min:8|same:new_password',
         ]);
         // sanitize data
         $email = filter_var($request->email, FILTER_SANITIZE_STRING);
         $username = filter_var($request->username, FILTER_SANITIZE_STRING);
-        $password = filter_var($request->password, FILTER_SANITIZE_STRING);
+        $password = filter_var($request->new_password, FILTER_SANITIZE_STRING);
         // create and save new user
         $user = new User;
         $user->username = $username;
@@ -47,7 +47,7 @@ class UserController extends Controller
         $user->password = Hash::make($password);
         $user->save();
         // sign in user and redirect to all post page
-        if (Auth::attempt( ['email' => $user->email, 'password' => $request->password] )) {
+        if (Auth::attempt( ['email' => $user->email, 'password' => $password] )) {
             $request->session()->regenerate();
             return redirect('/posts');
         }

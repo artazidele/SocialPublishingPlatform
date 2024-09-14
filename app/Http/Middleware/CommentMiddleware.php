@@ -24,7 +24,7 @@ class CommentMiddleware
             return redirect('/users/signin');
         }
         if($user->id !== $comment->user_id) {
-            return redirect()->back();
+            return redirect('/posts/'.$request->id);
         }
         return $next($request);
     }

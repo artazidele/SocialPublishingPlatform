@@ -12,6 +12,7 @@ use App\Http\Middleware\CommentMiddleware;
 
 // Post routes
 Route::get('/posts', [PostController::class, 'index'])->middleware(PostAuthMiddleware::class);
+Route::get('/posts/clear', [PostController::class, 'clearSearchResults'])->middleware(PostAuthMiddleware::class);
 Route::get('/posts/user/{username}', [PostController::class, 'user'])->middleware(PostAuthMiddleware::class);
 Route::get('/posts/create', [PostController::class, 'create'])->middleware(PostAuthMiddleware::class);
 Route::post('/posts', [PostController::class, 'store'])->middleware(PostAuthMiddleware::class);

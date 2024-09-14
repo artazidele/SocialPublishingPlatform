@@ -37,11 +37,13 @@ class CommentController extends Controller
         $request->validate([
             'comment' => 'required|max:255',
         ]);
+        // sanitize data
+        $message = filter_var($request->comment, FILTER_SANITIZE_STRING);
         // create and save post
         $comment = new Comment;
         $comment->user_id = Auth::user()->id;
         $comment->post_id = $request->id;
-        $comment->message = $request->comment;
+        $comment->message = $message;
         $comment->save();
         // return to post page
         return redirect('/posts/'.$request->id);

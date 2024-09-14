@@ -22,8 +22,6 @@ class PostController extends Controller
      */
     public function index(Request $request): View
     {
-        // clear session data
-        $request->session()->forget(['posts', 'categories', 'checkedCategories', 'searchedKeywords']);
         // return all post view
         $categories = Category::all();
         $posts = Post::orderBy('created_at','desc')->get();
@@ -31,6 +29,13 @@ class PostController extends Controller
             'categories' => $categories,
             'posts' => $posts,
         ]);
+    }
+
+    //
+    public function clearSearchResults(Request $request): RedirectResponse
+    {
+        $request->session()->forget(['posts', 'categories', 'checkedCategories', 'searchedKeywords']);
+        return redirect('/posts');
     }
 
     /**
@@ -68,11 +73,14 @@ class PostController extends Controller
             'content' => 'required',
             'categories' => 'required',
         ]);
+        // sanitize data
+        $title = filter_var($request->title, FILTER_SANITIZE_STRING);
+        $content = filter_var($request->content, FILTER_SANITIZE_STRING);
         // create and save post
         $post = new Post;
         $post->username = Auth::user()->username;
-        $post->title = $request->title;
-        $post->content = $request->content;
+        $post->title = $title;
+        $post->content = $content;
         $post->save();
         $post_id = $post->id;
         // save postCategories
@@ -121,11 +129,14 @@ class PostController extends Controller
             'content' => 'required',
             'categories' => 'required',
         ]);
+        // sanitize data
+        $title = filter_var($request->title, FILTER_SANITIZE_STRING);
+        $content = filter_var($request->content, FILTER_SANITIZE_STRING);
         // update post
         $post = Post::find($request->id);
         $post->update([
-            'title' => $request->title,
-            'content' => $request->content,
+            'title' => $title,
+            'content' => $content,
         ]);
         // destroy previous postCategories
         $postCategoryController = new PostCategoryController;
@@ -156,7 +167,9 @@ class PostController extends Controller
         if ($request->keyword != null) {
             foreach($request->keyword as $keyword) {
                 if (strlen(trim($keyword)) > 0) {
-                    array_push($keywordArray, $keyword);
+                    // sanitize data
+                    $keywordSanitized = filter_var($keyword, FILTER_SANITIZE_STRING);
+                    array_push($keywordArray, $keywordSanitized);
                 }
             }
         }

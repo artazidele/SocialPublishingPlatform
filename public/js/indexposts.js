@@ -5,12 +5,7 @@ function addNewKeywordInput() {
     input.type = "text";
     let span = document.createElement('span');
     span.classList.add("removeDiv");
-    //
     span.innerHTML = "&times;";
-    //
-    // var ESAPI = require('node-esapi');
-    // span.innerHTML = "<%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(&times;))%>";
-    //
     let div = document.createElement('div');
     div.appendChild(input);
     div.appendChild(span);

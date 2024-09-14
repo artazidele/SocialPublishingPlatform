@@ -36,11 +36,15 @@ class UserController extends Controller
             'password' => 'required|max:255|min:8',
             'confirm_password' => 'required|max:255|min:8|same:password',
         ]);
+        // sanitize data
+        $email = filter_var($request->email, FILTER_SANITIZE_STRING);
+        $username = filter_var($request->username, FILTER_SANITIZE_STRING);
+        $password = filter_var($request->password, FILTER_SANITIZE_STRING);
         // create and save new user
         $user = new User;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->username = $username;
+        $user->email = $email;
+        $user->password = Hash::make($password);
         $user->save();
         // sign in user and redirect to all post page
         if (Auth::attempt( ['email' => $user->email, 'password' => $request->password] )) {
@@ -55,12 +59,15 @@ class UserController extends Controller
     public function login(Request $request): RedirectResponse 
     {
         // validate data
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        $request->validate([
+            'email' => 'required|email:rfc',
+            'password' => 'required',
         ]);
+        // sanitize data
+        $email = filter_var($request->email, FILTER_SANITIZE_STRING);
+        $password = filter_var($request->password, FILTER_SANITIZE_STRING);
         // sign in user and redirect to all post page
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $request->session()->regenerate();
             return redirect('/posts');
         }

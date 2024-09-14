@@ -5,7 +5,7 @@
     @if(auth()->check())
     <div class="">
         <ul class="">
-            <li><a href="/posts">All Posts</a></li>
+            <li><a href="/posts/clear">All Posts</a></li>
             <li><a href="/posts/user/{{ Auth::user()->username }}">My Posts</a></li>
             <li><a href="/posts/create">New Post</a></li>
             <li><a href="/users/logout">Sign Out</a></li>

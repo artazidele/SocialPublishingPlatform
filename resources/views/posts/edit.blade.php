@@ -76,13 +76,6 @@
         </div>
     </div>
     <script src="{{ URL::asset('js/posts.js') }}"></script>
-    @once
-    <!-- @push('scripts') -->
-    <!-- <script src="{{ URL::asset('js/editpost.js') }}"></script> -->
-    <!-- @endpush -->
-    @endonce
 </div>
 @endif
-
-    
 @endsection

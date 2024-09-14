@@ -31,7 +31,7 @@ class PostController extends Controller
         ]);
     }
 
-    //
+    // function that clears filtered and searched results
     public function clearSearchResults(Request $request): RedirectResponse
     {
         $request->session()->forget(['posts', 'categories', 'checkedCategories', 'searchedKeywords']);
@@ -164,7 +164,7 @@ class PostController extends Controller
         return redirect('/posts');
     }
 
-    //
+    // function that filters and searches posts
     public function filterAndSearch(Request $request): RedirectResponse
     {
         // create keyword array
@@ -226,6 +226,7 @@ class PostController extends Controller
         return redirect('/posts/filtered/searched');
     }
 
+    // fucntion that returns filtered and searched post view
     public function filteredAndSearched(): View
     {
         return view('posts.filtered');

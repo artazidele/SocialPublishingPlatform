@@ -1,3 +1,4 @@
+// function to add new input
 function addNewKeywordInput() {
     const keywordDiv = document.getElementById("keyword_div");
     let input = document.createElement('input');
@@ -31,6 +32,7 @@ function addNewKeywordInput() {
     keywordDiv.appendChild(div);
 }
 
+// function to add remove div functionality
 function addRemoveDivFunctionality() {
     var removeDivSpans = document.getElementsByClassName('removeDiv')
     for (var i = 0; i < removeDivSpans.length; i++) {
@@ -42,6 +44,7 @@ function addRemoveDivFunctionality() {
 
 addRemoveDivFunctionality();
 
+// function that checks all checkboxes
 function checkAll() {
     const categoriesInputs = document.getElementsByName('categories[]');
     const allCheckbox = document.getElementById('allCheckbox');

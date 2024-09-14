@@ -1,4 +1,6 @@
 let opened = false;
+
+// function that shows or hides menu
 function openMenu() {
     const menuDiv = document.getElementById('menu');
     if (opened === false) {

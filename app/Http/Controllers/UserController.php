@@ -14,19 +14,19 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    //
+    // function that returns register view
     public function signup(): View
     {
         return view('users.signup');
     }
 
-    //
+    // function that returns sign in view
     public function signin(): View
     {
         return view('users.signin');
     }
 
-    //
+    // function that registers new user
     public function register(Request $request): RedirectResponse
     {
         // validate data
@@ -55,7 +55,7 @@ class UserController extends Controller
         return back()->with('registration_error', "Registration failed.");
     }
 
-    // 
+    // function that signs in existing user
     public function login(Request $request): RedirectResponse 
     {
         // validate data
@@ -75,7 +75,7 @@ class UserController extends Controller
         return back()->with('signin_error', 'Email or password is not correct.');
     }
 
-    // logout user
+    // function that signs out user
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();

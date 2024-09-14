@@ -3,6 +3,7 @@ function setPreviousValues() {
     document.getElementById('contentI').value = document.getElementById('contentP').value;
 
     const postCategories = JSON.parse(document.getElementById('postCategoriesP').value);
+    console.log(postCategories);
     const postCategoryCheckboxes = document.getElementsByName('categories[]');
     postCategoryCheckboxes.forEach(checkbox => {
         postCategories.forEach(postCategory => {
@@ -11,7 +12,7 @@ function setPreviousValues() {
             }
         });
     });
-
 }
 
 setPreviousValues();
+

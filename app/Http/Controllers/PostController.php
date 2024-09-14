@@ -112,6 +112,11 @@ class PostController extends Controller
     {   
         $categories = Category::all();
         $post = Post::find($request->id);
+        $oldCategories = [];
+        foreach($post->postCategories as $postCategory) {
+            array_push($oldCategories, $postCategory->category_id);
+        }
+        $request->session()->put('oldCategories', $oldCategories);
         return view('posts.edit')->with([
             'post' => $post,
             'categories' => $categories,

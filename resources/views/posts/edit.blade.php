@@ -16,41 +16,42 @@
     <div class="container p-4">
         <h1>Edit Post</h1>
         <div>
-                <div class="d-none">
-                    <input id="titleP" value="{{ $post->title }}">
-                    <input id="contentP" value="{{ $post->content }}">
-                    <input id="postCategoriesP" value="{{ $post->postCategories }}">
-                </div>
-                <form method="POST" action="/posts/edit/{{ $post->id }}" enctype="application/x-www-form-urlencoded">
-                    @csrf
-                    <div class="form-group mt-3">
-                        <label class="mb-3">Categories: </label>
-                        <div id="categoriesDiv">
-                            @if(isset($categories))
-                                <div class="categories__div">
-                                    @foreach ($categories as $category)
-                                        <div>
-                                            <input class="@error('categories') is-invalid @enderror form-check-input" {{ in_array($category->id, old('categories') ?? []) == true ?'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
-                                            <label>{{ $category->name }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @error('categories')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            @endif
-                        </div>
+            <form method="POST" action="/posts/edit/{{ $post->id }}" enctype="application/x-www-form-urlencoded">
+                @csrf
+                <div class="form-group mt-3">
+                    <label class="mb-3">Categories: </label>
+                    <div id="categoriesDiv">
+                        @if(isset($categories))
+                            <div class="categories__div">
+                                @foreach ($categories as $category)
+                                    <div>
+                                        @if($errors->has('categories'))
+                                            <input class="@error('categories') is-invalid @enderror form-check-input" {{ in_array($category->id, old('categories', [])) == true ? 'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                                        @elseif(old('categories'))
+                                            <input class="@error('categories') is-invalid @enderror form-check-input" {{ in_array($category->id, old('categories', [])) == true ? 'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                                        @else
+                                            <input class="@error('categories') is-invalid @enderror form-check-input" {{ in_array($category->id, session('oldCategories')) == true ? 'checked' : '' }} value="{{ $category->id }}" type="checkbox" name="categories[]">
+                                        @endif
+                                        <label>{{ $category->name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @error('categories')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        @endif
                     </div>
-                    <div class="form-group mt-3">
-                        <label class="">Title: </label>
-                        <input id="titleI" placeholder="Title*" class="@error('title') is-invalid @enderror form-control" type="text" name="title" value="{{ old('title') }}">
+                </div>
+                <div class="form-group mt-3">
+                    <label class="">Title: </label>
+                    <input id="titleI" placeholder="Title*" class="@error('title') is-invalid @enderror form-control" type="text" name="title" value="{{ old('title', $post->title) }}">
                         @error('title')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="form-group mt-3">
                         <label class="">Content: </label>
-                        <textarea id="contentI" class="@error('content') is-invalid @enderror form-control" name="content" value="{{ old('content') }}"></textarea>
+                        <textarea id="contentI" class="@error('content') is-invalid @enderror form-control" name="content">{{ old('content', $post->content) }}</textarea>
                         @error('content')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -75,7 +76,13 @@
         </div>
     </div>
     <script src="{{ URL::asset('js/posts.js') }}"></script>
-    <script src="{{ URL::asset('js/editpost.js') }}"></script>
+    @once
+    <!-- @push('scripts') -->
+    <!-- <script src="{{ URL::asset('js/editpost.js') }}"></script> -->
+    <!-- @endpush -->
+    @endonce
 </div>
 @endif
+
+    
 @endsection

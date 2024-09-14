@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group mt-3">
                     <label class="">Content: </label>
-                    <textarea class="@error('content') is-invalid @enderror form-control" name="content" value="{{ old('content') }}"></textarea>
+                    <textarea class="@error('content') is-invalid @enderror form-control" name="content">{{ old('content') }}</textarea>
                     @error('content')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror

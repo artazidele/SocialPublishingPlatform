@@ -9,4 +9,4 @@ To install this project:
 8) from another terminal run command "php artisan serve"
 9) open webpage, for instance, "http://127.0.0.1:8000/users/signin" (ports may be different)
 10) You can sign in using one of emails from UserSeeder, for instance, "user1@example.com", and password "password" or you can create a new account.
-11) When you are signed in, you can read your and other users' posts, create, edit and delete your own posts, write and delete your own comments.
+11) When you are signed in, you can read your and other users' posts, create, edit and delete your own posts, write and delete your own comments. Also you can filter and search posts

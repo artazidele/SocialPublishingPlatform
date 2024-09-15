@@ -7,9 +7,9 @@
     <div class="">
         <h1 class="mt-4">Sign Up</h1>
         <div>
-            @isset($registration_error)
-                <p>{{ $registration_error }}</p>
-            @endisset
+            @if($errors->has('registration_error'))
+                <p class="text-danger">Registration failed.</p>
+            @endif
             <form method="POST" action="/users/register" enctype="application/x-www-form-urlencoded">
                 @csrf
                 <div class="form-group mt-3">

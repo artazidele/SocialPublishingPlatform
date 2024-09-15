@@ -7,9 +7,9 @@
     <div class="">
         <h1 class="mt-4">Sign In</h1>
         <div>
-            @isset($signin_error)
-                <p>{{ $signin_error }}</p>
-            @endisset
+            @if($errors->has('signin_error'))
+                <p class="text-danger">Email or password is not correct.</p>
+            @endif
             <form method="GET" action="/users/login" enctype="application/x-www-form-urlencoded">
                 @csrf
                 <div class="form-group mt-3">

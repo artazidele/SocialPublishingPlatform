@@ -50,9 +50,9 @@ class UserController extends Controller
         if (Auth::attempt( ['email' => $user->email, 'password' => $password] )) {
             $request->session()->regenerate();
             return redirect('/posts');
+        } else {
+            return back()->withErrors(['registration_error' => 'Registration failed.']);
         }
-        // if user was not signed in successfully return back to signup page with error
-        return back()->with('registration_error', "Registration failed.");
     }
 
     // function that signs in existing user
@@ -70,9 +70,9 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $request->session()->regenerate();
             return redirect('/posts');
+        } else {
+            return back()->withErrors(['signin_error' => 'Email or password is not correct.']);
         }
-        // if user was not signed in successfully return back to signin page with error
-        return back()->with('signin_error', 'Email or password is not correct.');
     }
 
     // function that signs out user
